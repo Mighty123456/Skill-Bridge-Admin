@@ -1,4 +1,5 @@
 import { axiosInstance } from './axiosInstance';
+import { type Badge } from './badges.api';
 
 export type WorkerStatus = 'pending' | 'verified' | 'rejected';
 
@@ -7,11 +8,16 @@ export type WorkerSummary = {
   name: string;
   email: string;
   phone: string;
+  profileImage?: string;
   primarySkill?: string;
   experience?: number;
+  services?: string[];
   city?: string;
   status: WorkerStatus;
   createdAt?: string;
+  governmentId?: string;
+  selfie?: string;
+  badges?: Badge[];
 };
 
 export const workerApi = {

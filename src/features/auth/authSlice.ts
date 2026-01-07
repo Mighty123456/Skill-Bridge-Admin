@@ -40,6 +40,18 @@ export const loginAdmin = createAsyncThunk(
   },
 );
 
+export const checkAuth = createAsyncThunk(
+  'auth/checkAuth',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await authApi.getMe();
+      return res.user; // Assuming response structure { user: ... } based on backend
+    } catch (err: any) {
+      return rejectWithValue('Session expired');
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -47,10 +59,16 @@ const authSlice = createSlice({
     loadFromStorage(state) {
       const token = localStorage.getItem('sb_admin_token');
       const adminRaw = localStorage.getItem('sb_admin_user');
-      if (token && adminRaw) {
-        state.token = token;
-        state.admin = JSON.parse(adminRaw);
-        state.isAuthenticated = true;
+      if (token && adminRaw && adminRaw !== 'undefined') {
+        try {
+          state.token = token;
+          state.admin = JSON.parse(adminRaw);
+          state.isAuthenticated = true;
+        } catch (e) {
+          // validation failed, clear storage
+          localStorage.removeItem('sb_admin_token');
+          localStorage.removeItem('sb_admin_user');
+        }
       }
     },
     logout(state) {
@@ -84,6 +102,27 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = (action.payload as string) || 'Login failed';
         state.isAuthenticated = false;
+      })
+      .addCase(checkAuth.pending, (state) => {
+        // We don't necessarily want to show global loading for background check, 
+        // but if it's initial load, maybe yes.
+        // Let's keep isLoading true to prevent premature redirects
+        state.isLoading = true;
+      })
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.admin = action.payload; // Update admin with fresh data
+        // Token is already in storage/axios, no need to update unless returned
+        localStorage.setItem('sb_admin_user', JSON.stringify(action.payload));
+      })
+      .addCase(checkAuth.rejected, (state) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.admin = null;
+        state.token = null;
+        localStorage.removeItem('sb_admin_token');
+        localStorage.removeItem('sb_admin_user');
       });
   },
 });

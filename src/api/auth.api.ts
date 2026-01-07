@@ -10,6 +10,10 @@ export const authApi = {
     const res = await axiosInstance.post('/auth/login', payload);
     return res.data;
   },
+  async getMe() {
+    const res = await axiosInstance.get('/auth/me');
+    return res.data;
+  },
 };
 
 

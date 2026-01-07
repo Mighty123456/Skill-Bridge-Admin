@@ -22,8 +22,17 @@
 
 @media (max-width: 768px) {
   .sb-admin-shell {
-    flex-direction: column;
+    /* Keep row because sidebar is fixed */
+    flex-direction: row;
+  }
+
+  .sb-sidebar-overlay {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 90;
   }
 }
-
-
