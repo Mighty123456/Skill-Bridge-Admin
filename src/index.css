@@ -1,0 +1,75 @@
+:root {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Modern Professional Theme */
+  /* Primary: Indigo */
+  --color-primary: #4f46e5;       /* Indigo 600 */
+  --color-primary-light: #818cf8; /* Indigo 400 */
+  --color-primary-dark: #3730a3;  /* Indigo 800 */
+  
+  /* Secondary: Teal (Accent) */
+  --color-secondary: #0d9488;     /* Teal 600 */
+  --color-secondary-light: #2dd4bf; /* Teal 400 */
+  --color-secondary-dark: #115e59;  /* Teal 800 */
+
+  /* Neutral Surface Colors */
+  --color-surface: #ffffff;
+  --color-background: #f3f4f6;    /* Cool Gray 100 */
+  
+  /* Text On Colors */
+  --color-on-primary: #ffffff;
+  --color-on-secondary: #ffffff;
+  --color-on-surface: #111827;    /* Gray 900 */
+  --color-on-background: #1f2937; /* Gray 800 */
+  --color-text-muted: #6b7280;    /* Gray 500 */
+
+  /* Semantic Colors */
+  --color-error: #ef4444;         /* Red 500 */
+  --color-success: #10b981;       /* Emerald 500 */
+  --color-warning: #f59e0b;       /* Amber 500 */
+  --color-info: #3b82f6;          /* Blue 500 */
+
+  /* Navigation & UI */
+  --color-nav-active: #4f46e5;
+  --color-nav-inactive: #6b7280;
+  --color-border: #e5e7eb;        /* Gray 200 */
+
+  /* Shadows */
+  --sb-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --sb-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --sb-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --sb-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}

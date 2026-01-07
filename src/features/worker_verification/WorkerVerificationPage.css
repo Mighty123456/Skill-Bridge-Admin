@@ -1,0 +1,123 @@
+.sb-wv {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sb-wv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sb-wv-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  letter-spacing: -0.025em;
+}
+
+.sb-wv-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.sb-wv-refresh {
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.sb-wv-refresh:hover:not(:disabled) {
+  background-color: var(--color-background);
+  border-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.sb-wv-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sb-wv-error {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: var(--color-error);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sb-wv-status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+  background-color: #fffbeb;
+  color: var(--color-warning);
+  border: 1px solid #fde68a;
+}
+
+.sb-wv-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.sb-wv-btn {
+  border-radius: 6px;
+  border: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sb-wv-btn-approve {
+  background-color: var(--color-success);
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.sb-wv-btn-approve:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: var(--sb-shadow-md);
+}
+
+.sb-wv-btn-reject {
+  background-color: transparent;
+  border: 1px solid #fecaca;
+  color: var(--color-error);
+}
+
+.sb-wv-btn-reject:hover {
+  background-color: #fef2f2;
+  border-color: var(--color-error);
+}
+
+@media (max-width: 640px) {
+  .sb-wv-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
