@@ -13,6 +13,7 @@ export type WorkerSummary = {
   experience?: number;
   services?: string[];
   city?: string;
+  state?: string;
   status: WorkerStatus;
   createdAt?: string;
   governmentId?: string;

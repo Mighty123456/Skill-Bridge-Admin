@@ -287,6 +287,10 @@ const WorkerVerificationPage = () => {
                       <span className="sb-detail-label">City</span>
                       <span className="sb-detail-value">{selectedWorker.city || 'N/A'}</span>
                     </div>
+                    <div className="sb-detail-row">
+                      <span className="sb-detail-label">State</span>
+                      <span className="sb-detail-value">{selectedWorker.state || 'N/A'}</span>
+                    </div>
                   </div>
 
                   <div className="sb-detail-group">
