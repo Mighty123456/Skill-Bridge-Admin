@@ -3,13 +3,17 @@ import { type Badge } from './badges.api';
 
 export type WorkerStatus = 'pending' | 'verified' | 'rejected';
 
-export type WorkerSummary = {
+export type ProfessionalType = 'worker' | 'contractor';
+
+export type ProfessionalSummary = {
   id: string;
   name: string;
   email: string;
   phone: string;
   profileImage?: string;
+  type: ProfessionalType;
   primarySkill?: string;
+  companyName?: string;
   experience?: number;
   services?: string[];
   city?: string;
@@ -22,13 +26,13 @@ export type WorkerSummary = {
 };
 
 export const workerApi = {
-  async getPendingWorkers(): Promise<WorkerSummary[]> {
-    const res = await axiosInstance.get('/admin/workers?status=pending');
-    return res.data.data?.workers ?? res.data.workers ?? [];
+  async getPendingProfessionals(): Promise<ProfessionalSummary[]> {
+    const res = await axiosInstance.get('/admin/professionals?status=pending');
+    return res.data.data?.professionals ?? [];
   },
 
-  async updateWorkerStatus(workerId: string, status: WorkerStatus, reason?: string) {
-    const res = await axiosInstance.patch(`/admin/workers/${workerId}/status`, {
+  async updateProfessionalStatus(id: string, status: WorkerStatus, reason?: string) {
+    const res = await axiosInstance.patch(`/admin/professionals/${id}/status`, {
       status,
       reason,
     });

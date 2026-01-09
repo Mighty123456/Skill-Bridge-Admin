@@ -1,3 +1,4 @@
+import { Search } from 'lucide-react';
 import './SimpleTable.css';
 
 type Column<T> = {
@@ -19,7 +20,12 @@ function SimpleTable<T extends { id: string | number }>({
   emptyMessage = 'No data available',
 }: SimpleTableProps<T>) {
   if (!data.length) {
-    return <div className="sb-table-empty">{emptyMessage}</div>;
+    return (
+      <div className="sb-table-empty">
+        <Search size={48} color="var(--color-text-dim)" opacity={0.5} />
+        <span>{emptyMessage}</span>
+      </div>
+    );
   }
 
   return (

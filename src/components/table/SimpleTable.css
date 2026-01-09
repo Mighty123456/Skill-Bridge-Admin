@@ -1,61 +1,85 @@
 .sb-table-wrapper {
   width: 100%;
   overflow-x: auto;
-  background-color: var(--color-surface, #ffffff);
-  border-radius: 16px;
-  box-shadow: var(--sb-shadow-md);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: 24px;
+  box-shadow: var(--sb-shadow-premium);
+  border: 1px solid var(--color-border-soft);
+  animation: slideUp 0.5s ease-out backwards;
 }
 
 .sb-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 14px;
-  color: var(--color-on-surface);
 }
 
 .sb-table thead {
-  background-color: var(--color-background);
-}
-
-.sb-table th,
-.sb-table td {
-  padding: 16px 20px;
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-background-soft);
 }
 
 .sb-table th {
-  font-weight: 600;
-  color: var(--color-text-muted);
-  font-size: 12px;
+  padding: 20px 24px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid var(--color-border-soft);
   white-space: nowrap;
 }
 
+.sb-table td {
+  padding: 18px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  border-bottom: 1px solid var(--color-border-soft);
+  transition: all var(--transition-fast);
+}
+
 .sb-table tbody tr {
-  transition: background-color 0.2s ease;
+  transition: all var(--transition-fast);
 }
 
 .sb-table tbody tr:hover {
-  background-color: rgba(79, 70, 229, 0.04);
-  /* Subtly tinted with primary color */
+  background-color: var(--color-primary-soft);
 }
 
-/* Remove bottom border from last row for cleaner look */
+.sb-table tbody tr:hover td {
+  color: var(--color-primary-dark);
+}
+
 .sb-table tbody tr:last-child td {
   border-bottom: none;
 }
 
+/* Status Chip Utility (if used in tables) */
+.sb-status-chip {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .sb-table-empty {
-  padding: 48px;
+  padding: 80px 48px;
   text-align: center;
-  font-size: 15px;
-  color: var(--color-text-muted);
   background-color: var(--color-surface);
-  border-radius: 16px;
-  box-shadow: var(--sb-shadow-sm);
-  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  border: 2px dashed var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.sb-table-empty span {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-dim);
 }

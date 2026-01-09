@@ -1,4 +1,14 @@
 import { NavLink } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  UserCheck,
+  Briefcase,
+  CreditCard,
+  AlertCircle,
+  BarChart3,
+  Users,
+  LogOut
+} from 'lucide-react';
 import './Sidebar.css';
 
 type SidebarProps = {
@@ -25,7 +35,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Dashboard
+          <LayoutDashboard size={20} />
+          <span>Dashboard</span>
         </NavLink>
 
         <div className="sb-sidebar-section-label">Operations</div>
@@ -36,7 +47,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Worker Verification
+          <UserCheck size={20} />
+          <span>Professional Verification</span>
         </NavLink>
 
         <NavLink
@@ -45,7 +57,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Job Monitoring
+          <Briefcase size={20} />
+          <span>Job Monitoring</span>
         </NavLink>
 
         <NavLink
@@ -54,7 +67,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Payments
+          <CreditCard size={20} />
+          <span>Payments</span>
         </NavLink>
 
         <NavLink
@@ -63,8 +77,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Disputes
+          <AlertCircle size={20} />
+          <span>Disputes</span>
         </NavLink>
+
+        <div className="sb-sidebar-section-label">Management</div>
 
         <NavLink
           to="/reports"
@@ -72,7 +89,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Reports
+          <BarChart3 size={20} />
+          <span>Reports</span>
         </NavLink>
 
         <NavLink
@@ -81,7 +99,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
           }
         >
-          Users
+          <Users size={20} />
+          <span>Users</span>
         </NavLink>
       </nav>
 
@@ -96,11 +115,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           </div>
         </div>
         <button className="sb-sidebar-logout" onClick={logout} title="Logout">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
+          <LogOut size={18} />
         </button>
       </div>
     </aside>

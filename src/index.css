@@ -1,49 +1,114 @@
 :root {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Modern Professional Theme */
-  /* Primary: Indigo */
-  --color-primary: #4f46e5;       /* Indigo 600 */
-  --color-primary-light: #818cf8; /* Indigo 400 */
-  --color-primary-dark: #3730a3;  /* Indigo 800 */
-  
-  /* Secondary: Teal (Accent) */
-  --color-secondary: #0d9488;     /* Teal 600 */
-  --color-secondary-light: #2dd4bf; /* Teal 400 */
-  --color-secondary-dark: #115e59;  /* Teal 800 */
+  /* SkillBridge Mobile-Aligned Theme (Teal & Orange) */
+  --color-primary: #008080;
+  /* Teal */
+  --color-primary-light: #4DB3B3;
+  --color-primary-dark: #005252;
+  --color-primary-soft: rgba(0, 128, 128, 0.08);
 
-  /* Neutral Surface Colors */
+  --color-accent: #FF6B35;
+  /* Orange */
+  --color-accent-light: #FF8C66;
+  --color-accent-dark: #CC5529;
+  --color-accent-soft: rgba(255, 107, 53, 0.1);
+
+  /* Surfaces */
   --color-surface: #ffffff;
-  --color-background: #f3f4f6;    /* Cool Gray 100 */
-  
-  /* Text On Colors */
-  --color-on-primary: #ffffff;
-  --color-on-secondary: #ffffff;
-  --color-on-surface: #111827;    /* Gray 900 */
-  --color-on-background: #1f2937; /* Gray 800 */
-  --color-text-muted: #6b7280;    /* Gray 500 */
+  --color-background: #F5F5F5;
+  /* Aligned with mobile background */
+  --color-background-soft: #eeeeee;
 
-  /* Semantic Colors */
-  --color-error: #ef4444;         /* Red 500 */
-  --color-success: #10b981;       /* Emerald 500 */
-  --color-warning: #f59e0b;       /* Amber 500 */
-  --color-info: #3b82f6;          /* Blue 500 */
+  /* Text */
+  --color-on-surface: #1e293b;
+  --color-on-background: #1e293b;
+  --color-text-muted: #64748b;
+  --color-text-dim: #94a3b8;
 
-  /* Navigation & UI */
-  --color-nav-active: #4f46e5;
-  --color-nav-inactive: #6b7280;
-  --color-border: #e5e7eb;        /* Gray 200 */
+  /* Semantic */
+  --color-error: #D32F2F;
+  --color-success: #388E3C;
+  --color-warning: #F57C00;
+  --color-info: #1976D2;
+
+  --color-border: #e2e8f0;
+  --color-border-soft: #f1f5f9;
+
+  /* Static Colors (No Gradients) */
+  --bg-primary: var(--color-primary);
+  --bg-accent: var(--color-accent);
+  --bg-surface: var(--color-surface);
 
   /* Shadows */
   --sb-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --sb-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --sb-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --sb-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --sb-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --sb-shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --sb-shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.04);
+  --sb-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Role Chips */
+.sb-role-chip {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.sb-role-chip.worker {
+  background-color: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.sb-role-chip.contractor {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+.sb-role-chip.admin {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.sb-status-chip {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sb-status-pending {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.sb-status-verified {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.sb-status-rejected {
+  background: #fef2f2;
+  color: #991b1b;
 }
 
 *,
@@ -57,19 +122,114 @@ body,
 #root {
   margin: 0;
   padding: 0;
-  min-height: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-on-background);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  transition: var(--transition-fast);
 }
 
 button {
   font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+/* Glass Utility (Minimalized for Professional Look) */
+.sb-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sb-wv-success {
+  padding: 16px 20px;
+  border-radius: 12px;
+  background-color: #f0fdf4;
+  border: 1px solid #388e3c33;
+  color: #166534;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.sb-wv-error {
+  padding: 16px 20px;
+  border-radius: 12px;
+  background-color: #fef2f2;
+  border: 1px solid #d32f2f33;
+  color: #991b1b;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideUp 0.3s ease-out;
 }

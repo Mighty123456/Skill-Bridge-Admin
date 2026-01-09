@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Mail, Lock, ShieldCheck } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { loginAdmin } from './authSlice';
 import './LoginPage.css';
@@ -26,7 +27,9 @@ const LoginPage = () => {
     <div className="sb-login-shell">
       <div className="sb-login-card">
         <div className="sb-login-header">
-          <div className="sb-login-logo">SB</div>
+          <div className="sb-login-badge">
+            <ShieldCheck size={32} color="var(--color-primary)" />
+          </div>
           <div>
             <h1>SkillBridge Admin</h1>
             <p>Secure access to worker verification and platform controls.</p>
@@ -36,24 +39,30 @@ const LoginPage = () => {
         <form className="sb-login-form" onSubmit={handleSubmit}>
           <label className="sb-login-field">
             <span>Email</span>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@skillbridge.com"
-            />
+            <div className="sb-input-wrapper">
+              <Mail size={18} className="sb-input-icon" />
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@skillbridge.com"
+              />
+            </div>
           </label>
 
           <label className="sb-login-field">
             <span>Password</span>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-            />
+            <div className="sb-input-wrapper">
+              <Lock size={18} className="sb-input-icon" />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+              />
+            </div>
           </label>
 
           {error && <div className="sb-login-error">{error}</div>}

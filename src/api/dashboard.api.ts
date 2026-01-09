@@ -1,10 +1,13 @@
 import { axiosInstance } from './axiosInstance';
 
 export type DashboardStats = {
-    pendingWorkers: number;
+    pendingVerifications: number;
     verifiedWorkers: number;
-    totalUsers: number;
+    totalWorkers: number;
+    verifiedContractors: number;
     totalContractors: number;
+    totalVerifiedProfessionals: number;
+    totalUsers: number;
 };
 
 export const dashboardApi = {

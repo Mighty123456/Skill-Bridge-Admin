@@ -1,39 +1,50 @@
 import { useEffect, useState } from 'react';
-import { workerApi, type WorkerSummary } from '../../api/worker.api';
+import {
+  RefreshCcw,
+  Eye,
+  CheckCircle,
+  XCircle,
+  Info,
+  FileText,
+  Award,
+  ChevronRight,
+  User
+} from 'lucide-react';
+import { workerApi, type ProfessionalSummary } from '../../api/worker.api';
 import { badgesApi, type Badge } from '../../api/badges.api';
 import SimpleTable from '../../components/table/SimpleTable';
 import './WorkerVerificationPage.css';
 
 const WorkerVerificationPage = () => {
-  const [workers, setWorkers] = useState<WorkerSummary[]>([]);
+  const [professionals, setProfessionals] = useState<ProfessionalSummary[]>([]);
   const [loading, setLoading] = useState(false);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const loadPendingWorkers = async () => {
+  const loadPendingProfessionals = async () => {
     setLoading(true);
     setError(null);
     try {
-      const list = await workerApi.getPendingWorkers();
-      setWorkers(list);
+      const list = await workerApi.getPendingProfessionals();
+      setProfessionals(list);
     } catch (err: any) {
       setError(
         err?.response?.data?.message ||
         err?.message ||
-        'Failed to load pending workers. Please try again.',
+        'Failed to load pending professionals. Please try again.',
       );
     } finally {
       setLoading(false);
     }
   };
 
-  const [selectedWorker, setSelectedWorker] = useState<WorkerSummary | null>(null);
+  const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalSummary | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'docs' | 'badges'>('overview');
   const [availableBadges, setAvailableBadges] = useState<Badge[]>([]);
   const [showBadgeSelector, setShowBadgeSelector] = useState(false);
 
   useEffect(() => {
-    loadPendingWorkers();
+    loadPendingProfessionals();
     loadBadges();
   }, []);
 
@@ -47,13 +58,12 @@ const WorkerVerificationPage = () => {
   };
 
   useEffect(() => {
-    if (selectedWorker) {
+    if (selectedProfessional) {
       setActiveTab('overview');
       setShowBadgeSelector(false);
     }
-  }, [selectedWorker]);
+  }, [selectedProfessional]);
 
-  /* Notification State */
   const [success, setSuccess] = useState<string | null>(null);
 
   const clearMessages = () => {
@@ -61,79 +71,77 @@ const WorkerVerificationPage = () => {
     setSuccess(null);
   };
 
-  /* Modal States */
   const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
-  const [rejectingWorkerId, setRejectingWorkerId] = useState<string | null>(null);
+  const [rejectingId, setRejectingId] = useState<string | null>(null);
 
-  const [confirmModal, setConfirmModal] = useState<{ isOpen: boolean; workerId: string | null }>({
+  const [confirmModal, setConfirmModal] = useState<{ isOpen: boolean; id: string | null }>({
     isOpen: false,
-    workerId: null
+    id: null
   });
 
-  const handleAction = (workerId: string, status: 'verified' | 'rejected') => {
+  const handleAction = (id: string, status: 'verified' | 'rejected') => {
     clearMessages();
     if (status === 'rejected') {
-      setRejectingWorkerId(workerId);
+      setRejectingId(id);
       setRejectionReason('');
       setRejectionModalOpen(true);
       return;
     }
 
     if (status === 'verified') {
-      setConfirmModal({ isOpen: true, workerId });
+      setConfirmModal({ isOpen: true, id });
     }
   };
 
   const executeApproval = async () => {
-    const workerId = confirmModal.workerId;
-    if (!workerId) return;
+    const id = confirmModal.id;
+    if (!id) return;
 
-    setConfirmModal({ isOpen: false, workerId: null });
-    setActionLoadingId(workerId);
+    setConfirmModal({ isOpen: false, id: null });
+    setActionLoadingId(id);
     try {
-      await workerApi.updateWorkerStatus(workerId, 'verified');
-      setWorkers((prev) => prev.filter((w) => w.id !== workerId));
-      if (selectedWorker?.id === workerId) setSelectedWorker(null);
-      setSuccess('Worker approved successfully! Confirmation email sent.');
+      await workerApi.updateProfessionalStatus(id, 'verified');
+      setProfessionals((prev) => prev.filter((p) => p.id !== id));
+      if (selectedProfessional?.id === id) setSelectedProfessional(null);
+      setSuccess('Professional approved successfully! Confirmation email sent.');
       setTimeout(() => setSuccess(null), 5000);
     } catch (err: any) {
-      setError(err?.response?.data?.message || err?.message || 'Failed to approve worker.');
+      setError(err?.response?.data?.message || err?.message || 'Failed to approve professional.');
     } finally {
       setActionLoadingId(null);
     }
   };
 
   const submitRejection = async () => {
-    if (!rejectingWorkerId) return;
+    if (!rejectingId) return;
     if (!rejectionReason.trim()) {
       setError('Please provide a reason for rejection.');
       return;
     }
 
-    setActionLoadingId(rejectingWorkerId);
+    setActionLoadingId(rejectingId);
     try {
-      await workerApi.updateWorkerStatus(rejectingWorkerId, 'rejected', rejectionReason);
-      setWorkers((prev) => prev.filter((w) => w.id !== rejectingWorkerId));
-      if (selectedWorker?.id === rejectingWorkerId) setSelectedWorker(null);
+      await workerApi.updateProfessionalStatus(rejectingId, 'rejected', rejectionReason);
+      setProfessionals((prev) => prev.filter((p) => p.id !== rejectingId));
+      if (selectedProfessional?.id === rejectingId) setSelectedProfessional(null);
       setRejectionModalOpen(false);
-      setSuccess('Worker rejected. Email notification sent.');
+      setSuccess('Professional rejected. Email notification sent.');
       setTimeout(() => setSuccess(null), 5000);
     } catch (err: any) {
-      setError(err?.response?.data?.message || err?.message || 'Failed to reject worker.');
+      setError(err?.response?.data?.message || err?.message || 'Failed to reject professional.');
     } finally {
       setActionLoadingId(null);
     }
   };
 
   const handleAssignBadge = async (badgeId: string) => {
-    if (!selectedWorker) return;
+    if (!selectedProfessional) return;
     try {
-      await badgesApi.assignBadge(selectedWorker.id, badgeId);
-      // Update local state
+      await badgesApi.assignBadge(selectedProfessional.id, badgeId);
       const badge = availableBadges.find(b => b._id === badgeId);
       if (badge) {
-        setSelectedWorker(prev => prev ? {
+        setSelectedProfessional(prev => prev ? {
           ...prev,
           badges: [...(prev.badges || []), badge]
         } : null);
@@ -147,13 +155,10 @@ const WorkerVerificationPage = () => {
   };
 
   const handleRemoveBadge = async (badgeId: string) => {
-    if (!selectedWorker) return;
-    // For badges, we can just remove directly or use a prompt. 
-    // Since user wants to avoid "browser popup", I'll skip confirmation for this simple action 
-    // or I'd need a 3rd modal. Let's skip browser confirm.
+    if (!selectedProfessional) return;
     try {
-      await badgesApi.removeBadge(selectedWorker.id, badgeId);
-      setSelectedWorker(prev => prev ? {
+      await badgesApi.removeBadge(selectedProfessional.id, badgeId);
+      setSelectedProfessional(prev => prev ? {
         ...prev,
         badges: prev.badges?.filter(b => b._id !== badgeId)
       } : null);
@@ -168,85 +173,113 @@ const WorkerVerificationPage = () => {
     <div className="sb-wv">
       <div className="sb-wv-header">
         <div>
-          <h2>Worker Verification</h2>
+          <h2>Professional Verification</h2>
           <p>
-            Review identity details and documents before workers become visible in the marketplace.
+            Review identity details and documents for workers and contractors before they go live.
           </p>
         </div>
-        <button className="sb-wv-refresh" onClick={loadPendingWorkers} disabled={loading}>
-          {loading ? 'Refreshing…' : 'Refresh'}
+        <button className="sb-wv-refresh" onClick={loadPendingProfessionals} disabled={loading}>
+          <RefreshCcw size={16} className={loading ? 'sb-spin' : ''} />
+          <span>{loading ? 'Refreshing…' : 'Refresh List'}</span>
         </button>
       </div>
 
       {success && <div className="sb-wv-success">{success}</div>}
       {error && <div className="sb-wv-error">{error}</div>}
 
-      <SimpleTable<WorkerSummary>
-        emptyMessage={loading ? 'Loading pending workers…' : 'No pending workers to review.'}
+      <SimpleTable<ProfessionalSummary>
+        emptyMessage={loading ? 'Analyzing pending professionals…' : 'No pending verifications at the moment.'}
         columns={[
-          { key: 'name', header: 'Worker' },
-          { key: 'primarySkill', header: 'Primary Skill' },
-          { key: 'experience', header: 'Exp (yrs)', width: '100px' },
-          { key: 'city', header: 'City', width: '120px' },
           {
-            key: 'status',
-            header: 'Status',
-            width: '120px',
-            render: (w) => <span className="sb-wv-status-chip">{w.status}</span>,
+            key: 'name',
+            header: 'Professional',
+            render: (p) => (
+              <div className="sb-table-user-cell">
+                <div className="sb-table-avatar">
+                  {p.profileImage ? (
+                    <img src={p.profileImage} alt={p.name} />
+                  ) : (
+                    <User size={16} />
+                  )}
+                </div>
+                <div className="sb-table-user-info">
+                  <span className="sb-table-user-name">{p.name}</span>
+                  <span className="sb-table-user-email">{p.email}</span>
+                </div>
+              </div>
+            )
           },
+          {
+            key: 'type',
+            header: 'Type',
+            width: '120px',
+            render: (p) => <span className={`sb-role-chip ${p.type}`}>{p.type}</span>
+          },
+          { key: 'primarySkill', header: 'Skill/Role' },
+          { key: 'experience', header: 'Exp', width: '80px', render: (p) => `${p.experience}y` },
+          { key: 'city', header: 'City', width: '120px' },
           {
             key: 'actions',
             header: 'Actions',
             width: '240px',
-            render: (w) => (
+            render: (p) => (
               <div className="sb-wv-actions">
                 <button
                   className="sb-wv-btn"
-                  onClick={() => setSelectedWorker(w)}
+                  onClick={() => setSelectedProfessional(p)}
+                  title="View Details"
                 >
-                  View
+                  <Eye size={16} />
+                  <span>View</span>
                 </button>
                 <button
                   className="sb-wv-btn sb-wv-btn-approve"
-                  onClick={() => handleAction(w.id, 'verified')}
+                  onClick={() => handleAction(p.id, 'verified')}
                   disabled={!!actionLoadingId}
-                  style={{ minWidth: '80px', display: 'flex', justifyContent: 'center' }}
                 >
-                  {actionLoadingId === w.id ? <div className="sb-loading-spinner" style={{ width: '12px', height: '12px' }} /> : 'Approve'}
+                  {actionLoadingId === p.id ? (
+                    <div className="sb-loading-spinner" style={{ width: '14px', height: '14px' }} />
+                  ) : (
+                    <>
+                      <CheckCircle size={16} />
+                      <span>Approve</span>
+                    </>
+                  )}
                 </button>
                 <button
                   className="sb-wv-btn sb-wv-btn-reject"
-                  onClick={() => handleAction(w.id, 'rejected')}
+                  onClick={() => handleAction(p.id, 'rejected')}
                   disabled={!!actionLoadingId}
+                  title="Reject Application"
                 >
-                  Reject
+                  <XCircle size={16} />
                 </button>
               </div>
             ),
           },
         ]}
-        data={workers}
+        data={professionals}
       />
 
       {/* Verification Drawer */}
-      {selectedWorker && (
-        <div className="sb-drawer-overlay" onClick={() => setSelectedWorker(null)}>
+      {selectedProfessional && (
+        <div className="sb-drawer-overlay" onClick={() => setSelectedProfessional(null)}>
           <div className="sb-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="sb-drawer-header">
               <div className="sb-user-profile-summary">
-                {selectedWorker.profileImage ? (
-                  <img src={selectedWorker.profileImage} className="sb-large-avatar" alt="Avatar" />
+                {selectedProfessional.profileImage ? (
+                  <img src={selectedProfessional.profileImage} className="sb-large-avatar" alt="Avatar" />
                 ) : (
                   <div className="sb-large-avatar">
-                    {selectedWorker.name.charAt(0).toUpperCase()}
+                    {selectedProfessional.name.charAt(0).toUpperCase()}
                   </div>
                 )}
                 <div>
-                  <h3 style={{ margin: '0 0 4px 0', fontSize: '18px' }}>{selectedWorker.name}</h3>
-                  <div className="sb-wv-status-chip">{selectedWorker.status}</div>
+                  <h3 style={{ margin: '0 0 4px 0', fontSize: '18px' }}>{selectedProfessional.name}</h3>
+                  <div className="sb-wv-status-chip">{selectedProfessional.type.toUpperCase()}</div>
                 </div>
               </div>
-              <button className="sb-drawer-close" onClick={() => setSelectedWorker(null)}>×</button>
+              <button className="sb-drawer-close" onClick={() => setSelectedProfessional(null)}>×</button>
             </div>
 
             <div className="sb-tabs">
@@ -254,65 +287,77 @@ const WorkerVerificationPage = () => {
                 className={`sb-tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
                 onClick={() => setActiveTab('overview')}
               >
-                Overview
+                <Info size={16} />
+                <span>Overview</span>
               </button>
               <button
                 className={`sb-tab-btn ${activeTab === 'docs' ? 'active' : ''}`}
                 onClick={() => setActiveTab('docs')}
               >
-                Verification
+                <FileText size={16} />
+                <span>Verification</span>
               </button>
-              <button
-                className={`sb-tab-btn ${activeTab === 'badges' ? 'active' : ''}`}
-                onClick={() => setActiveTab('badges')}
-              >
-                Badges
-              </button>
+              {selectedProfessional.type === 'worker' && (
+                <button
+                  className={`sb-tab-btn ${activeTab === 'badges' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('badges')}
+                >
+                  <Award size={16} />
+                  <span>Badges</span>
+                </button>
+              )}
             </div>
 
             <div className="sb-drawer-content">
               {activeTab === 'overview' && (
                 <>
                   <div className="sb-detail-group">
-                    <h3>Contact Information</h3>
-                    <div className="sb-detail-row">
-                      <span className="sb-detail-label">Email</span>
-                      <span className="sb-detail-value">{selectedWorker.email}</span>
-                    </div>
-                    <div className="sb-detail-row">
-                      <span className="sb-detail-label">Phone</span>
-                      <span className="sb-detail-value">{selectedWorker.phone}</span>
-                    </div>
-                    <div className="sb-detail-row">
-                      <span className="sb-detail-label">City</span>
-                      <span className="sb-detail-value">{selectedWorker.city || 'N/A'}</span>
-                    </div>
-                    <div className="sb-detail-row">
-                      <span className="sb-detail-label">State</span>
-                      <span className="sb-detail-value">{selectedWorker.state || 'N/A'}</span>
+                    <h3>Application Basis</h3>
+                    <div className="sb-info-grid">
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Full Name</span>
+                        <div className="sb-info-value-row">
+                          <span className="sb-info-value">{selectedProfessional.name}</span>
+                          <ChevronRight size={14} className="sb-info-arrow" />
+                        </div>
+                      </div>
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Role Type</span>
+                        <span className="sb-info-value" style={{ textTransform: 'capitalize' }}>{selectedProfessional.type}</span>
+                      </div>
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Contact Email</span>
+                        <span className="sb-info-value">{selectedProfessional.email}</span>
+                      </div>
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Contact Phone</span>
+                        <span className="sb-info-value">{selectedProfessional.phone}</span>
+                      </div>
                     </div>
                   </div>
 
                   <div className="sb-detail-group">
-                    <h3>Professional Details</h3>
-                    <div className="sb-detail-row">
-                      <span className="sb-detail-label">Primary Skill</span>
-                      <span className="sb-detail-value">{selectedWorker.primarySkill}</span>
-                    </div>
-                    <div className="sb-detail-row">
-                      <span className="sb-detail-label">Experience</span>
-                      <span className="sb-detail-value">{selectedWorker.experience} Years</span>
-                    </div>
-                    {selectedWorker.services && selectedWorker.services.length > 0 && (
-                      <div style={{ marginTop: '12px' }}>
-                        <span className="sb-detail-label" style={{ display: 'block', marginBottom: '8px' }}>Services</span>
-                        <div className="sb-tags">
-                          {selectedWorker.services.map((s, i) => (
-                            <span key={i} className="sb-tag">{s}</span>
-                          ))}
+                    <h3>Professional Roadmap</h3>
+                    <div className="sb-info-grid">
+                      {selectedProfessional.type === 'contractor' && (
+                        <div className="sb-info-item">
+                          <span className="sb-info-label">Firm/Company</span>
+                          <span className="sb-info-value">{selectedProfessional.companyName || 'Private Practitioner'}</span>
                         </div>
+                      )}
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Primary Expertise</span>
+                        <span className="sb-info-value">{selectedProfessional.primarySkill}</span>
                       </div>
-                    )}
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Years of Experience</span>
+                        <span className="sb-info-value">{selectedProfessional.experience} Years</span>
+                      </div>
+                      <div className="sb-info-item">
+                        <span className="sb-info-label">Current Location</span>
+                        <span className="sb-info-value">{selectedProfessional.city || 'Not Specified'}</span>
+                      </div>
+                    </div>
                   </div>
                 </>
               )}
@@ -323,16 +368,16 @@ const WorkerVerificationPage = () => {
                   <div className="sb-docs-grid">
                     <div className="sb-doc-card">
                       <span>Government ID</span>
-                      {selectedWorker.governmentId ? (
-                        <img src={selectedWorker.governmentId} alt="Government ID" className="sb-doc-img" />
+                      {selectedProfessional.governmentId ? (
+                        <img src={selectedProfessional.governmentId} alt="Government ID" className="sb-doc-img" />
                       ) : (
                         <div className="sb-no-doc">No ID uploaded</div>
                       )}
                     </div>
                     <div className="sb-doc-card">
                       <span>Selfie</span>
-                      {selectedWorker.selfie ? (
-                        <img src={selectedWorker.selfie} alt="Selfie" className="sb-doc-img" />
+                      {selectedProfessional.selfie ? (
+                        <img src={selectedProfessional.selfie} alt="Selfie" className="sb-doc-img" />
                       ) : (
                         <div className="sb-no-doc">No Selfie uploaded</div>
                       )}
@@ -367,10 +412,10 @@ const WorkerVerificationPage = () => {
                               color: '#fff',
                               border: 'none',
                               cursor: 'pointer',
-                              opacity: selectedWorker.badges?.some(b => b._id === badge._id) ? 0.5 : 1
+                              opacity: selectedProfessional.badges?.some(b => b._id === badge._id) ? 0.5 : 1
                             }}
                             onClick={() => handleAssignBadge(badge._id)}
-                            disabled={selectedWorker.badges?.some(b => b._id === badge._id)}
+                            disabled={selectedProfessional.badges?.some(b => b._id === badge._id)}
                           >
                             {badge.name}
                           </button>
@@ -380,11 +425,11 @@ const WorkerVerificationPage = () => {
                   )}
 
                   <div className="sb-badges-list">
-                    {!selectedWorker.badges || selectedWorker.badges.length === 0 ? (
+                    {!selectedProfessional.badges || selectedProfessional.badges.length === 0 ? (
                       <div className="sb-no-doc">No badges assigned</div>
                     ) : (
                       <div className="sb-tags">
-                        {selectedWorker.badges.map((badge: any) => (
+                        {selectedProfessional.badges.map((badge: any) => (
                           <span
                             key={badge._id}
                             className="sb-tag"
@@ -407,18 +452,18 @@ const WorkerVerificationPage = () => {
             <div className="sb-drawer-footer">
               <button
                 className="sb-wv-btn sb-wv-btn-reject"
-                onClick={() => handleAction(selectedWorker.id, 'rejected')}
+                onClick={() => handleAction(selectedProfessional.id, 'rejected')}
                 disabled={!!actionLoadingId}
               >
                 Reject Only
               </button>
               <button
                 className="sb-wv-btn sb-wv-btn-approve"
-                onClick={() => handleAction(selectedWorker.id, 'verified')}
+                onClick={() => handleAction(selectedProfessional.id, 'verified')}
                 disabled={!!actionLoadingId}
                 style={{ minWidth: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
               >
-                {actionLoadingId === selectedWorker.id ? <div className="sb-loading-spinner" /> : 'Approve & Verify'}
+                {actionLoadingId === selectedProfessional.id ? <div className="sb-loading-spinner" /> : 'Approve & Verify'}
               </button>
             </div>
           </div>
@@ -427,18 +472,18 @@ const WorkerVerificationPage = () => {
 
       {/* Approval Confirmation Modal */}
       {confirmModal.isOpen && (
-        <div className="sb-modal-overlay" onClick={() => setConfirmModal({ isOpen: false, workerId: null })}>
+        <div className="sb-modal-overlay" onClick={() => setConfirmModal({ isOpen: false, id: null })}>
           <div className="sb-modal" onClick={(e) => e.stopPropagation()}>
             <div className="sb-modal-header">
               <h3>Confirm Approval</h3>
             </div>
             <div className="sb-modal-content">
-              <p>Are you sure you want to approve this worker? They will be notified via email and become visible in the marketplace.</p>
+              <p>Are you sure you want to approve this professional? They will be notified via email and become visible in the marketplace.</p>
             </div>
             <div className="sb-modal-footer">
               <button
                 className="sb-wv-btn"
-                onClick={() => setConfirmModal({ isOpen: false, workerId: null })}
+                onClick={() => setConfirmModal({ isOpen: false, id: null })}
               >
                 Cancel
               </button>
@@ -458,10 +503,10 @@ const WorkerVerificationPage = () => {
         <div className="sb-modal-overlay" onClick={() => !actionLoadingId && setRejectionModalOpen(false)}>
           <div className="sb-modal" onClick={(e) => e.stopPropagation()}>
             <div className="sb-modal-header">
-              <h3>Reject Worker</h3>
+              <h3>Reject Professional</h3>
             </div>
             <div className="sb-modal-content">
-              <p>Please provide a reason for rejecting this worker's verification application.</p>
+              <p>Please provide a reason for rejecting this application.</p>
               <textarea
                 className="sb-textarea"
                 placeholder="Reason for rejection (e.g., blurry ID, invalid documents)..."

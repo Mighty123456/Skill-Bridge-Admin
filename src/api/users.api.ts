@@ -38,4 +38,8 @@ export const usersApi = {
         const users = res.data.data?.users ?? [];
         return users.map((u: any) => ({ ...u, id: u._id }));
     },
+
+    async deleteUser(userId: string): Promise<void> {
+        await axiosInstance.delete(`/admin/users/${userId}`);
+    },
 };
