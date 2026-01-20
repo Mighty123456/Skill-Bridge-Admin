@@ -1,0 +1,22 @@
+.sb-stars {
+    display: flex;
+    gap: 2px;
+}
+
+.sb-feedback-text {
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+.sb-actions-row {
+    display: flex;
+    gap: 8px;
+}
+
+.sb-text-success {
+    color: var(--color-success);
+}
+
+.sb-text-error {
+    color: var(--color-error);
+}

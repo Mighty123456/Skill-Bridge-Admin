@@ -1,0 +1,25 @@
+.sb-score {
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+}
+
+.sb-score-high {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.sb-score-mid {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.sb-score-low {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.sb-btn-icon-danger {
+    color: #ef4444;
+}

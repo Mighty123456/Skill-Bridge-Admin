@@ -1,0 +1,120 @@
+.sb-config-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 800px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.sb-warning-banner {
+    background-color: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+    padding: 16px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sb-config-section {
+    padding: 32px;
+}
+
+.sb-section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    color: var(--color-on-surface);
+    border-bottom: 1px solid var(--color-border-soft);
+    padding-bottom: 16px;
+}
+
+.sb-section-title svg {
+    color: var(--color-primary);
+}
+
+.sb-section-title h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.sb-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.sb-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sb-form-group label {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sb-form-group input {
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-on-surface);
+    transition: all var(--transition-fast);
+    background: var(--color-surface);
+}
+
+.sb-form-group input:focus {
+    outline: none;
+    background: var(--color-surface);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-soft);
+}
+
+.sb-help-text {
+    font-size: 13px;
+    color: var(--color-text-dim);
+    margin-top: 4px;
+}
+
+.sb-action-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    position: sticky;
+    bottom: 24px;
+}
+
+.sb-btn-primary {
+    background: var(--color-primary);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.25);
+    transition: all var(--transition-fast);
+}
+
+.sb-btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 128, 128, 0.3);
+}
+
+.sb-btn-primary:active {
+    transform: translateY(0);
+}

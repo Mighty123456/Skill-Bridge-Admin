@@ -8,6 +8,11 @@ export type DashboardStats = {
     totalContractors: number;
     totalVerifiedProfessionals: number;
     totalUsers: number;
+    activeJobs: number;
+    completedJobs: number;
+    emergencyJobs: number;
+    totalRevenue: number;
+    escrowBalance: number;
 };
 
 export const dashboardApi = {

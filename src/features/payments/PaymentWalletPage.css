@@ -1,0 +1,69 @@
+.sb-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.sb-stat-card {
+    background-color: var(--color-surface);
+    padding: 20px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.sb-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sb-bg-primary-light {
+    background-color: var(--color-job-card-primary);
+}
+
+.sb-bg-success-light {
+    background-color: #d1fae5;
+}
+
+.sb-bg-warning-light {
+    background-color: #fef3c7;
+}
+
+.sb-bg-error-light {
+    background-color: #fee2e2;
+}
+
+.sb-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sb-stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text-dim);
+}
+
+.sb-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.sb-mono {
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.sb-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}

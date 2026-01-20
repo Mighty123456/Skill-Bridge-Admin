@@ -7,7 +7,10 @@ import {
   AlertCircle,
   BarChart3,
   Users,
-  LogOut
+  LogOut,
+  FileText,
+  Star,
+  Settings
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -48,7 +51,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           }
         >
           <UserCheck size={20} />
-          <span>Professional Verification</span>
+          <span>Verification</span>
         </NavLink>
 
         <NavLink
@@ -58,8 +61,40 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           }
         >
           <Briefcase size={20} />
-          <span>Job Monitoring</span>
+          <span>Jobs</span>
         </NavLink>
+
+        <NavLink
+          to="/quotations"
+          className={({ isActive }) =>
+            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
+          }
+        >
+          <FileText size={20} />
+          <span>Quotations</span>
+        </NavLink>
+
+        <NavLink
+          to="/emergency"
+          className={({ isActive }) =>
+            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
+          }
+        >
+          <AlertCircle size={20} />
+          <span>Emergency</span>
+        </NavLink>
+
+        <NavLink
+          to="/ratings"
+          className={({ isActive }) =>
+            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
+          }
+        >
+          <Star size={20} />
+          <span>Ratings</span>
+        </NavLink>
+
+        <div className="sb-sidebar-section-label">Financials</div>
 
         <NavLink
           to="/payments"
@@ -68,30 +103,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           }
         >
           <CreditCard size={20} />
-          <span>Payments</span>
-        </NavLink>
-
-        <NavLink
-          to="/disputes"
-          className={({ isActive }) =>
-            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
-          }
-        >
-          <AlertCircle size={20} />
-          <span>Disputes</span>
+          <span>Payments & Wallet</span>
         </NavLink>
 
         <div className="sb-sidebar-section-label">Management</div>
-
-        <NavLink
-          to="/reports"
-          className={({ isActive }) =>
-            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
-          }
-        >
-          <BarChart3 size={20} />
-          <span>Reports</span>
-        </NavLink>
 
         <NavLink
           to="/users"
@@ -100,7 +115,29 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           }
         >
           <Users size={20} />
-          <span>Users</span>
+          <span>Users & Contractors</span>
+        </NavLink>
+
+        <div className="sb-sidebar-section-label">System</div>
+
+        <NavLink
+          to="/reports"
+          className={({ isActive }) =>
+            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
+          }
+        >
+          <BarChart3 size={20} />
+          <span>Reports & Logs</span>
+        </NavLink>
+
+        <NavLink
+          to="/settings"
+          className={({ isActive }) =>
+            `sb-sidebar-link ${isActive ? 'sb-sidebar-link-active' : ''}`
+          }
+        >
+          <Settings size={20} />
+          <span>Configuration</span>
         </NavLink>
       </nav>
 

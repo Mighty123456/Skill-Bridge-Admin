@@ -6,6 +6,14 @@ import WorkerVerificationPage from '../features/worker_verification/WorkerVerifi
 import UsersPage from '../features/users/UsersPage';
 import ProtectedRoute from './protectedRoute';
 
+import JobManagementPage from '../features/jobs/JobManagementPage';
+import QuotationMonitoringPage from '../features/quotations/QuotationMonitoringPage';
+import PaymentWalletPage from '../features/payments/PaymentWalletPage';
+import RatingsFeedbackPage from '../features/ratings/RatingsFeedbackPage';
+import EmergencyJobPage from '../features/emergency/EmergencyJobPage';
+import PlatformConfigurationPage from '../features/settings/PlatformConfigurationPage';
+import ReportsPage from '../features/reports/ReportsPage';
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -24,6 +32,14 @@ const AppRouter = () => {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="workers/verification" element={<WorkerVerificationPage />} />
           <Route path="users" element={<UsersPage />} />
+
+          <Route path="jobs" element={<JobManagementPage />} />
+          <Route path="quotations" element={<QuotationMonitoringPage />} />
+          <Route path="payments" element={<PaymentWalletPage />} />
+          <Route path="ratings" element={<RatingsFeedbackPage />} />
+          <Route path="emergency" element={<EmergencyJobPage />} />
+          <Route path="settings" element={<PlatformConfigurationPage />} />
+          <Route path="reports" element={<ReportsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
